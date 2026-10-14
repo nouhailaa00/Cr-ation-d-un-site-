@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours</title>
+
+    <style>
+
+    .cadre {
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .cadre h2 {
+        margin-top: 0;
+    }
+
+    .cadre p {
+        margin: 15px 0;
+    }
+
+    .etapes {
+        margin-left: 20px;
+        margin-top: 20px;
+    }
+
+    .etapes p {
+        margin-bottom: 20px;
+    }
+
+    .etapes .sous-etapes {
+        margin-left: 60px;
+        line-height: 1.5;
+    }
+
+
+    .methodologies {
+        margin: 20px;
+    }
+
+    .categorie {
+        margin-bottom: 35px;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .categorie h3 {
+        margin-top: 0;
+        margin-bottom: 25px;
+    }
+
+    .methode {
+        margin-bottom: 25px;
+        padding-left: 15px;
+    }
+
+    .methode h4 {
+        margin-bottom: 8px;
+    }
+
+    .methode p {
+        margin-top: 0;
+    }
+
+    h1,
+    h2 {
+        margin-left: 0;
+        padding-left: 0;
+    }
+
+
+    .schema-risques {
+        margin: 30px 0;
+        text-align: center;
+    }
+
+    .schema-risques h1 {
+        margin-bottom: 50px;
+    }
+
+    .ligne-risques {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 10px;
+        position: relative;
+    }
+
+    .ligne-risques::before {
+        content: "";
+        position: absolute;
+        top: -30px;
+        left: 8%;
+        right: 8%;
+        border-top: 2px solid black;
+    }
+
+    .type-risque {
+        width: 16%;
+        border: 2px solid black;
+        padding: 12px;
+        min-height: 150px;
+        position: relative;
+
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .type-risque:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    .type-risque::before {
+        content: "";
+        position: absolute;
+        top: -32px;
+        left: 50%;
+        height: 30px;
+        border-left: 2px solid black;
+    }
+
+    .type-risque h3 {
+        font-size: 17px;
+        margin-top: 0;
+    }
+
+    .type-risque p {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    body {
+        transition: background-color 0.4s, color 0.4s;
+    }
+
+    .mode-sombre {
+        background-color: #1e1e1e;
+        color: #f5f5f5;
+    }
+
+    .mode-sombre .cadre {
+        border-color: #f5f5f5;
+    }
+
+    .mode-sombre .type-risque {
+        border-color: #f5f5f5;
+    }
+
+    .mode-sombre .ligne-risques::before {
+        border-color: #f5f5f5;
+    }
+
+    .mode-sombre .type-risque::before {
+        border-color: #f5f5f5;
+    }
+
+    .mode-sombre p,
+    .mode-sombre h1,
+    .mode-sombre h2,
+    .mode-sombre h3,
+    .mode-sombre h4 {
+        color: inherit;
+    }
+
+    #modeBtn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 20px;
+        background-color: #333;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+    }
+
+    #modeBtn:hover {
+        transform: scale(1.05);
+    }
+
+
+    #topBtn {
+        display: none;
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        padding: 12px 16px;
+        border: none;
+        border-radius: 50%;
+        background-color: #1976D2;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+    }
+
+    #topBtn:hover {
+        transform: scale(1.1);
+    }
+
+    #progressBar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        width: 0%;
+        background-color: #1976D2;
+        z-index: 2000;
+    }
+    .reveal {
+        opacity: 0;
+        transform: translateY(35px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .image-animation {
+        transition: transform 0.4s ease;
+    }
+
+    .image-animation:hover {
+        transform: scale(1.03);
+    }
+
+    @media (max-width: 900px) {
+
+        .ligne-risques {
+            flex-wrap: wrap;
+        }
+
+        .type-risque {
+            width: 28%;
+        }
+    }
+
+    @media (max-width: 600px) {
+
+        .type-risque {
+            width: 100%;
+        }
+
+        .ligne-risques::before,
+        .type-risque::before {
+            display: none;
+        }
+
+        #modeBtn {
+            top: 10px;
+            right: 10px;
+        }
+
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        line-height: 1.7;
+        background:
+            radial-gradient(circle at 10% 10%, rgba(33, 150, 243, 0.08), transparent 25%),
+            radial-gradient(circle at 90% 30%, rgba(76, 175, 80, 0.07), transparent 25%),
+            linear-gradient(135deg, #ffffff, #f4f7fb);
+        padding: 0 4%;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(33, 150, 243, 0.05);
+        top: 100px;
+        left: -100px;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    body::after {
+        content: "";
+        position: fixed;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: rgba(76, 175, 80, 0.05);
+        bottom: 50px;
+        right: -130px;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    body > h1 {
+        position: relative;
+        margin-top: 45px;
+        margin-bottom: 25px;
+        padding: 18px 20px;
+        border-radius: 16px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    body > h1:hover {
+        transform: translateY(-3px);
+    }
+
+    body > h1::after {
+        content: "";
+        display: block;
+        width: 70px;
+        height: 4px;
+        margin: 12px auto 0;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #1976D2, #8D4E2A);
+    }
+
+    body > h1:first-of-type {
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(25, 118, 210, 0.12);
+        backdrop-filter: blur(10px);
+    }
+
+    body > h1:first-of-type span {
+        text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.15);
+    }
+
+    h1,
+    h2,
+    h3 {
+        transition: transform 0.3s ease;
+    }
+
+    h2.reveal {
+        position: relative;
+        padding: 12px 18px;
+        border-left: 5px solid #1976D2;
+        border-radius: 8px;
+        background: linear-gradient(
+            90deg,
+            rgba(25, 118, 210, 0.08),
+            transparent
+        );
+    }
+
+    h3.reveal {
+        padding: 10px 15px;
+        border-radius: 8px;
+        background: rgba(141, 78, 42, 0.05);
+    }
+
+    p.reveal {
+        font-size: 16px;
+        line-height: 1.85;
+        padding: 8px 15px;
+        border-radius: 8px;
+        transition:
+            transform 0.3s ease,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    p.reveal:hover {
+        transform: translateX(5px);
+        background: rgba(25, 118, 210, 0.035);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    }
+
+    .cadre {
+        position: relative;
+        overflow: hidden;
+        border: none;
+        border-left: 6px solid #E65100;
+        border-radius: 16px;
+        padding: 25px 30px;
+        background: linear-gradient(
+            135deg,
+            #fff8f2,
+            #ffffff
+        );
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .cadre:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .cadre::before {
+        content: "💡";
+        position: absolute;
+        top: 12px;
+        right: 20px;
+        font-size: 30px;
+        opacity: 0.7;
+    }
+
+    .cadre h2 {
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(230, 81, 0, 0.2);
+    }
+
+    .etapes {
+        padding: 20px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.65);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .etapes > p.reveal {
+        padding: 14px 18px;
+        margin: 12px 0;
+        border-left: 4px solid #E65100;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .etapes > p.reveal:hover {
+        transform: translateX(8px);
+        box-shadow: 0 7px 18px rgba(0, 0, 0, 0.09);
+    }
+
+    .etapes .sous-etapes {
+        padding: 12px 20px;
+        border-left: 3px dashed #1976D2;
+        border-radius: 8px;
+        background: rgba(25, 118, 210, 0.05);
+    }
+
+
+    .categorie {
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        backdrop-filter: blur(8px);
+        transition:
+            transform 0.35s ease,
+            box-shadow 0.35s ease;
+    }
+
+    .categorie:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .methode {
+        position: relative;
+        padding: 18px 22px;
+        border-left: 4px solid #1976D2;
+        border-radius: 12px;
+        background: linear-gradient(
+            90deg,
+            rgba(25, 118, 210, 0.06),
+            rgba(255, 255, 255, 0.9)
+        );
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease,
+            border-color 0.3s ease;
+    }
+
+    .methode:hover {
+        transform: translateX(8px);
+        border-left-color: #E65100;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+    }
+
+    .methode h4 {
+        font-size: 18px;
+    }
+
+    img {
+        border-radius: 15px;
+        max-width: 100%;
+    }
+
+    .image {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .image img {
+        display: inline-block;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        transition:
+            transform 0.4s ease,
+            box-shadow 0.4s ease;
+    }
+
+    .image img:hover {
+        transform: scale(1.025) translateY(-5px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .image-animation:hover {
+        transform: scale(1.04) translateY(-4px);
+        cursor: zoom-in;
+    }
+
+    h2.reveal + img {
+        display: block;
+        margin: 20px auto 45px;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        transition:
+            transform 0.4s ease,
+            box-shadow 0.4s ease;
+    }
+
+    h2.reveal + img:hover {
+        transform: scale(1.025) translateY(-5px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+        cursor: zoom-in;
+    }
+
+    iframe {
+        display: block;
+        max-width: 100%;
+        margin: 30px auto;
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    iframe:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .reveal > img.image-animation {
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .schema-risques {
+        padding: 30px 20px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.75);
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.07);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .type-risque {
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+        transition:
+            transform 0.35s ease,
+            box-shadow 0.35s ease;
+    }
+
+    .type-risque:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.14);
+    }
+
+    #progressBar {
+        background: linear-gradient(
+            90deg,
+            #1976D2,
+            #42A5F5,
+            #66BB6A,
+            #E65100
+        );
+        box-shadow: 0 0 10px rgba(25, 118, 210, 0.5);
+    }
+
+    #modeBtn {
+        backdrop-filter: blur(10px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #modeBtn:hover {
+        transform: scale(1.08) rotate(-1deg);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.28);
+    }
+
+    #topBtn {
+        box-shadow: 0 6px 20px rgba(25, 118, 210, 0.35);
+    }
+
+    #topBtn:hover {
+        transform: scale(1.15) translateY(-3px);
+    }
+
+    body.mode-sombre {
+        background:
+            radial-gradient(
+                circle at 10% 10%,
+                rgba(33, 150, 243, 0.08),
+                transparent 25%
+            ),
+            linear-gradient(135deg, #111827, #1e293b);
+    }
+
+    .mode-sombre .categorie {
+        background: rgba(30, 41, 59, 0.85);
+        border-color: #334155;
+    }
+
+    .mode-sombre .methode {
+        background: linear-gradient(
+            90deg,
+            rgba(30, 41, 59, 0.95),
+            rgba(51, 65, 85, 0.8)
+        );
+    }
+
+    .mode-sombre .etapes {
+        background: rgba(30, 41, 59, 0.7);
+    }
+
+    .mode-sombre .etapes > p.reveal {
+        background: #1e293b;
+    }
+
+    .mode-sombre .etapes .sous-etapes {
+        background: rgba(25, 118, 210, 0.08);
+    }
+
+    .mode-sombre .cadre {
+        background: linear-gradient(
+            135deg,
+            #3a2418,
+            #2b211c
+        );
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .mode-sombre .schema-risques {
+        background: rgba(30, 41, 59, 0.85);
+        border-color: #334155;
+    }
+
+    .mode-sombre .type-risque {
+        background: #1e293b;
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    .mode-sombre body > h1:first-of-type {
+        background: rgba(30, 41, 59, 0.8);
+    }
+
+    .mode-sombre h2.reveal {
+        background: linear-gradient(
+            90deg,
+            rgba(25, 118, 210, 0.15),
+            transparent
+        );
+    }
+
+    .mode-sombre h3.reveal {
+        background: rgba(141, 78, 42, 0.1);
+    }
+
+    .mode-sombre p.reveal:hover {
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    ::selection {
+        background: #1976D2;
+        color: white;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #eef1f5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+            #1976D2,
+            #8D4E2A
+        );
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #1976D2;
+    }
+
+    .mode-sombre::-webkit-scrollbar-track {
+        background: #111827;
+    }
+
+    @media (max-width: 900px) {
+
+        body {
+            padding: 0 3%;
+        }
+
+        body > h1 {
+            font-size: 28px;
+        }
+
+        .categorie {
+            padding: 18px;
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        body {
+            padding: 0 3%;
+        }
+
+        body > h1 {
+            font-size: 23px;
+            padding: 14px;
+        }
+
+        h2.reveal {
+            font-size: 20px;
+        }
+
+        h3.reveal {
+            font-size: 18px;
+        }
+
+        p.reveal {
+            font-size: 15px;
+        }
+
+        .cadre {
+            margin: 15px 0;
+            padding: 20px;
+        }
+
+        .methodologies {
+            margin: 10px 0;
+        }
+
+        .categorie {
+            padding: 15px;
+        }
+
+        .methode {
+            padding: 15px;
+        }
+
+        #topBtn {
+            right: 15px;
+            bottom: 15px;
+        }
+
+    }
+
+
+    .cours-ajout {
+        margin: 35px auto;
+        padding: 28px;
+        max-width: 1150px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.88);
+        box-shadow: 0 8px 25px rgba(40, 50, 90, 0.12);
+        border: 1px solid rgba(120,130,180,0.18);
+    }
+    .cours-ajout h1, .cours-ajout h2, .cours-ajout h3 { color: #5546a5; }
+    .cours-ajout h2 { margin-top: 25px; }
+    .cours-ajout .carte-ajout {
+        padding: 18px;
+        margin: 14px 0;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #f6f4ff, #eef7ff);
+        border-left: 5px solid #8172d5;
+    }
+    .cours-ajout .grille-ajout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 14px;
+        margin: 18px 0;
+    }
+    .cours-ajout .petite-carte {
+        padding: 16px;
+        border-radius: 13px;
+        background: #fff;
+        border: 1px solid #e2def8;
+        box-shadow: 0 4px 12px rgba(40,50,90,0.06);
+    }
+    .cours-ajout .etape-scrum {
+        text-align: center;
+        padding: 15px 10px;
+        border-radius: 12px;
+        background: #eeeaff;
+        border: 1px solid #d7d0ff;
+        font-weight: 600;
+    }
+    .cours-ajout .fleche-scrum {
+        text-align: center;
+        font-size: 25px;
+        color: #8172d5;
+        padding: 2px;
+    }
+    .cours-ajout .note-cours {
+        border-left: 5px solid #e2a84b;
+        background: #fff8e9;
+        padding: 15px 18px;
+        border-radius: 10px;
+        margin: 16px 0;
+    }
+    .mode-sombre .cours-ajout {
+        background: #24243a;
+        color: #eeeeF8;
+        border-color: #454563;
+    }
+    .mode-sombre .cours-ajout h1,
+    .mode-sombre .cours-ajout h2,
+    .mode-sombre .cours-ajout h3 { color: #c4baff; }
+    .mode-sombre .cours-ajout .carte-ajout,
+    .mode-sombre .cours-ajout .petite-carte,
+    .mode-sombre .cours-ajout .etape-scrum {
+        background: #30304a;
+        color: #f0efff;
+        border-color: #555275;
+    }
+    .mode-sombre .cours-ajout .note-cours {
+        background: #40392b;
+        color: #fff3d6;
+    }
+
+    .cours-ajout .carte-ajout,
+    .cours-ajout .petite-carte,
+    .cours-ajout .etape-scrum,
+    .cours-ajout .note-cours {
+        transition:
+            opacity 0.8s ease,
+            transform 0.4s ease,
+            box-shadow 0.3s ease,
+            border-color 0.3s ease,
+            background-color 0.3s ease;
+    }
+    .cours-ajout .carte-ajout:hover {
+        transform: translateX(8px);
+        border-left-color: #E65100;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+    }
+    .cours-ajout .petite-carte:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.14);
+    }
+    .cours-ajout .etape-scrum:hover {
+        transform: translateY(-5px) scale(1.04);
+        box-shadow: 0 10px 22px rgba(85, 70, 165, 0.2);
+    }
+    .cours-ajout .note-cours:hover {
+        transform: translateX(8px);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+    }
+    .cours-ajout p.reveal {
+        transition: opacity 0.8s ease, transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @media (max-width: 650px) {
+        .cours-ajout { padding: 18px; margin: 20px 10px; }
+    }
+
+</style>
+</head>
+
+
+<body>
+
+    <div id="progressBar"></div>
+
+    <button id="modeBtn">🌙 Mode sombre</button>
+    <button id="topBtn">↑</button>
+
+
+
+    <h1 style="text-align: center;">
+        <span style="color: red;">
+            <i><u>Approche Agile</u></i>
+        </span>
+    </h1>
+
+    <br>
+
+
+    <h1>
+        <span style="color: #2E7D32;">
+            <strong><u>Partie 1 :</u></strong>
+        </span>
+        Connaître les fondamentaux de la gestion de projet
+    </h1>
+
+    <br>
+
+
+    <h1>
+        <span style="color: #2E7D32;">
+            <strong><u>Chapitre 1 :</u></strong>
+        </span>
+        Découvrir les Concepts de gestion de projet
+    </h1>
+
+    <br>
+
+    <h1 class="reveal">
+        <strong>
+            <u>
+                <span style="color:#8172D5;">Définitions</span>
+            </u>
+        </strong>
+    </h1>
+
+    <p class="reveal">
+        <strong>
+            <span style="color: #8D4E2A;">Projet:</span>
+        </strong>
+        est un ensemble d'activités organisées et planifiées pour atteindre un objectif précis,
+        dans un délai, avec des ressources et un budget déterminés.
+    </p>
+
+
+    <p class="reveal">
+        <strong>
+            <span style="color: #8D4E2A;">Gestion de projet:</span>
+        </strong>
+        est une action temporaire avec un début et une fin, qui mobilise des ressources
+        identifiées (humaines, matérielles, équipements, matières premières,
+        informationnelles et financières) durant sa réalisation, visant à organiser
+        de bout en bout le bon déroulement d’un projet.
+    </p>
+
+    <p class="reveal">
+        <strong>
+            <span style="color: #8D4E2A;">Une ressource:</span>
+        </strong>
+        sont les moyens nécessaires pour réaliser un projet.
+    </p>
+
+    <p class="reveal">
+        <strong>
+            <span style="color: #8D4E2A;">Livrable:</span>
+        </strong>
+        est un résultat concret produit pendant ou à la fin d'un projet.
+    </p>
+
+    <p class="reveal">
+        <strong>
+            <span style="color: #8D4E2A;">Charte de projet:</span>
+        </strong>
+        est un document qui officialise le projet et présente ses informations principales,
+        les objectifs, les contraintes et les critères de succès d'un projet.
+    </p>
+
+    <h1 class="reveal">
+        <strong>
+            <u>
+                <span style="color: #8172D5">
+                    Définition des parties prenantes d'un projet
+                </span>
+            </u>
+        </strong>
+    </h1>
+
+    <p class="reveal">
+         Il s'agit de l'ensemble des personnes et des organisations qui ont quelque chose
+        à voir avec le projet. Soit elles sont directement impliquées dans la conduite des
+        opérations, soit elles sont impactées par la problématique de départ, par le choix
+        ou la mise en œuvre des solutions. Certaines parties prenantes peuvent exercer
+        une influence à différents niveaux.
+    </p>
+
+    <p class="reveal">
+         Ces acteurs clés se situent aussi bien en interne - à tout niveau de la hiérarchie
+        de l'entreprise - qu'en externe (un fournisseur concerné par de nouvelles méthodes
+        d'approvisionnement d'un client, etc.).
+    </p>
+
+
+    <h2 class="reveal">
+        <u>
+            <i>
+                <span style="color: #8D4E2A;">
+                    1. Acteurs externes:
+                </span>
+            </i>
+        </u>
+    </h2>
+
+    <img
+        src="acteurs externes (2).png"
+        alt="Acteurs externes"
+        style="width: 80%; max-width: 800px;"
+    >
+
+
+    <h2 class="reveal">
+        <u>
+            <i>
+                <span style="color: #8D4E2A;">
+                    2. Acteurs internes:
+                </span>
+            </i>
+        </u>
+    </h2>
+
+    <img
+        src="acteurs internes.png"
+        alt="Acteurs internes"
+        style="width: 80%; max-width: 800px;"
+    >
+
+
+    <h1 class="reveal">
+        <strong>
+            <u>
+                <span style="color:#8172D5">
+                    Principaux rôles dans un projet informatique
+                </span>
+            </u>
+        </strong>
+    </h1>
+
+
+    <p class="reveal">
+        <u>
+            <em>
+                <b>
+                    <span style="color: #8D4E2A;">
+                        1-Chef de projet :
+                    </span>
+                </b>
+            </em>
+        </u>
+        pilote le projet, assure le respect des délais et des objectifs,
+        coordonne les acteurs et maîtrise les outils/processus informatiques.
+    </p>
+
+
+    <p class="reveal">
+        <u>
+            <em>
+                <b>
+                    <span style="color: #8D4E2A;">
+                        2-Équipe de réalisation :
+                    </span>
+                </b>
+            </em>
+        </u>
+        chargée de concevoir, développer et mettre en œuvre la solution ;
+        elle réalise les différentes tâches techniques du projet et veille à ce que
+        le produit respecte les besoins et les objectifs définis.
+    </p>
+
+
+    <p class="reveal">
+        <u>
+            <em>
+                <b>
+                    <span style="color: #8D4E2A;">
+                        3-Utilisateurs :
+                    </span>
+                </b>
+            </em>
+        </u>
+        bénéficiaire de l'application ; il teste le produit, remonte les problèmes
+        et doit être impliqué dès le début pour que le résultat réponde vraiment à ses besoins.
+    </p>
+
+
+    <h1 class="reveal">
+        <strong>
+            <u>
+                <span style="color: #8172D5">
+                    Caractéristiques de base d'un projet
+                </span>
+            </u>
+        </strong>
+    </h1>
+
+
+    <p class="reveal">
+        <u><b><span style="color: #8D4E2A;">➜Objectifs définis:</span></b></u>
+        projet vise un résultat précis et mesurable.
+    </p>
+
+
+    <p class="reveal">
+        <u><b><span style="color: #8D4E2A;">➜Durée limitée:</span></b></u>
+        Il a un début et une fin.
+    </p>
+
+
+    <p class="reveal">
+        <u><b><span style="color: #8D4E2A;">➜Ressources limitées:</span></b></u>
+        Il dispose d'un budget, d'une équipe et de moyens définis.
+    </p>
+
+
+    <p class="reveal">
+        <u><b><span style="color: #8D4E2A;">➜Unicité:</span></b></u>
+        Chaque projet est différent même s'il ressemble à d'autres.
+    </p>
+
+
+    <p class="reveal">
+        <u><b><span style="color: #8D4E2A;">➜Complexité:</span></b></u>
+        Il implique des risques et des imprévus à gérer.
+    </p>
+
+
+    <p class="reveal">
+        <u><b><span style="color: #8D4E2A;">➜Plusieurs impliqués:</span></b></u>
+        Chef de projet, équipe, client, etc., qui doivent se coordonner.
+    </p>
+
+
+    <h1 class="reveal">
+        <strong>
+            <u>
+                <span style="color:#8172D5">
+                    La matrice d'assignation des responsabilités (RACI)
+                </span>
+            </u>
+        </strong>
+    </h1>
+
+
+    <p class="reveal">
+        La matrice d'assignation des responsabilités (RACI) est une table qui définit
+        pour chaque tâche d'un projet qui fait quoi parmi les acteurs :
+        <br>
+
+        ★ <b><span style="color: #8D4E2A;">R(Responsible):</span></b>
+        Qui réalise la tâche.
+        <br>
+
+        ★ <b><span style="color: #8D4E2A;">A(Accountable):</span></b>
+        Qui valide et est responsable du résultat.
+        <br>
+
+        ★ <b><span style="color: #8D4E2A;">C(Consulted):</span></b>
+        Qui est consulté pour avis.
+        <br>
+
+        ★ <b><span style="color: #8D4E2A;">I(Informed):</span></b>
+        Qui est informé de l'avancement.
+    </p>
+
+
+    <div class="reveal">
+        <iframe
+            width="650"
+            height="365"
+            src="https://www.youtube.com/embed/PckETQlHG8U"
+            title="La Matrice RACI expliquée Pas à Pas"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <div
+        style="display: flex; align-items: center; gap: 40px;"
+        class="reveal"
+    >
+
+        <div style="width: 60%;">
+
+            <h1 style="font-size: 30px;">
+                <strong>
+                    <u>
+                        <span style="color:#8172D5">
+                            Contraintes dans la gestion d'un projet
+                        </span>
+                    </u>
+                </strong>
+            </h1>
+
+            <p>
+                Ce sont les limites qui encadrent le projet et que le chef de projet
+                doit respecter tout au long de sa réalisation. On parle souvent du
+                triangle des contraintes (ou triangle QCD / Triangle d'or):
+                <br>
+
+                ◆ <b><span style="color: #8D4E2A;">Délai (Temps):</span></b>
+                Le projet doit être livré dans un temps déterminé.
+                <br>
+
+                ◆ <b><span style="color: #8D4E2A;">Coût (Budget):</span></b>
+                Le projet doit respecter le budget alloué.
+                <br>
+
+                ◆ <b><span style="color: #8D4E2A;">Qualité (Périmètre/Résultat):</span></b>
+                Le projet doit répondre aux exigences et objectifs fixés.
+            </p>
+
+        </div>
+
+
+        <div style="width: 40%; text-align: center;">
+
+            <img
+                class="image-animation"
+                src="https://blog-gestion-de-projet.com/wp-content/uploads/2023/05/le-triangle-dor-du-projet.png.webp"
+                alt="Triangle des contraintes"
+                style="width: 100%; max-width: 400px; height: auto;"
+            >
+
+        </div>
+
+    </div>
+
+    <h1 class="reveal">
+        <strong>
+            <u>
+                <span style="color: green;">
+                    Etape 1:
+                </span>
+                Gestion du projet
+            </u>
+        </strong>
+    </h1>
+
+
+    <h2 class="reveal">
+        <span style="color:#8172D5">
+            Analyse des besoins
+        </span>
+    </h2>
+
+
+    <h3 class="reveal">
+        <span style="color: #8D4E2A;">
+            1-Définition
+        </span>
+    </h3>
+
+
+    <p class="reveal">
+        L'analyse des besoins consiste à identifier, comprendre et préciser les besoins
+        des utilisateurs et les attentes du client afin de définir clairement ce que
+        le projet doit réaliser.
+    </p>
+
+
+    <h3 class="reveal">
+        <span style="color: #8D4E2A;">
+            2-les étapes de l'analyse des besoins
+        </span>
+    </h3>
+
+
+    <div class="etapes">
+
+        <p class="reveal" style="margin-bottom: 0;">
+            <b>
+                <span style="color: #E65100;">
+                    1-Identifier:
+                </span>
+            </b>
+        </p>
+
+
+        <div class="sous-etapes reveal" style="margin-left: 40px;">
+
+            +Besoins
+            <br>
+
+            +Exigences
+            <br>
+
+            +Spécifications
+            <br>
+
+            +Fonctionnalités/Tâches
+
+        </div>
+
+
+        <p class="reveal">
+            <b>
+                <span style="color: #E65100;">
+                    2-Comprendre le contexte
+                </span>
+            </b>
+            : Questions(QQQQPC)
+        </p>
+
+
+        <p class="reveal">
+            <b>
+                <span style="color: #E65100;">
+                    3-Comparer/Etudier le projet par rapport au marché public
+                </span>
+            </b>
+        </p>
+
+
+        <p class="reveal">
+            <b>
+                <span style="color: #E65100;">
+                    4-Prise de decision:
+                </span>
+                >90% Réussite // <90% Échec
+            </b>
+        </p>
+
+
+        <p class="reveal">
+            <b>
+                <span style="color: #E65100;">
+                    5-Prioriser les tasks/Besoins
+                </span>
+            </b>
+        </p>
+
+
+        <p class="reveal">
+            <b>
+                <span style="color: #E65100;">
+                    6-Formaliser les tâches
+                </span>
+            </b>
+        </p>
+
+    </div>
+
+    <div class="cadre reveal">
+
+        <h2>
+            <span style="color: red;">
+                Remarque:
+            </span>
+        </h2>
+
+
+        <p>
+            ✓Analyse de besoin : projet détermine la réussite ou l'échec
+            de votre initiative dès le départ
+        </p>
+
+
+        <p>
+            ✓Livrable obtenu par l'analyse de besoin nommé
+            "CAHIER DE CHARGE"
+        </p>
+
+
+        <p>
+            ✓Un projet débute idéalement par l'expression d'un ou plusieurs
+            besoins qui seront ensuite traduits en objectifs concrets.
+        </p>
+
+
+        <p>
+            <b>✓Cahier de charge:</b>
+            C'est un document qui décrit les attentes et les contraintes
+            du client pour un projet, il est essentiel de bien comprendre
+            le besoin client.
+        </p>
+
+
+        <p>
+            <b>✓Besoin exprimé par le client est:</b>
+            Un besoin client = Un besoin explicite
+        </p>
+
+
+        <p>
+            <b>✓Besoin fonctionnel:</b>
+            C'est un besoin qui décrit ce que le système doit faire
+            = Besoin implicite
+        </p>
+
+    </div>
+
+    <h1 class="reveal">
+        <span style="color: #8172D5">
+            Définition de périmètre de projet
+        </span>
+    </h1>
+
+
+    <p class="reveal">
+        Le périmètre de projet décrit les limites du projet,
+        ce qui est inclus et ce qui ne l'est pas.
+    </p>
+
+
+    <h1 class="reveal">
+        <span style="color:#8172D5">
+            Définition de contexte de projet
+        </span>
+    </h1>
+
+
+    <p class="reveal">
+        Correspond à l'ensemble des informations d'un projet et lui donnent
+        de la profondeur. Le contexte inclut les facteurs externes et internes
+        influençant le projet (économique, technologie, logiciels, organisationnel)
+        peuvent influencer le projet, tels que le marché, la réglementation,
+        les ressources disponibles, etc.
+    </p>
+
+    <h2 class="reveal">
+        <span style="color:#8172D5">
+            Les méthodologies de planification et de gestion de projet
+        </span>
+    </h2>
+
+
+    <div class="methodologies">
+
+        <div class="categorie">
+
+            <h3 class="reveal">
+                <span style="color: #8D4E2A;">
+                    1. Méthodologies traditionnelles / prévisibles:
+                </span>
+            </h3>
+
+
+            <div class="methode reveal">
+
+                <h4>
+                    <span style="color: #E65100;">
+                        • Méthode en cascade (Waterfall)
+                    </span>
+                </h4>
+
+                <p>
+                    Le projet avance étape par étape :
+                    analyse → conception → développement → tests → livraison.
+                </p>
+
+            </div>
+
+
+            <div class="image reveal">
+
+                <img
+                    class="image-animation"
+                    src="https://blog-gestion-de-projet.com/wp-content/uploads/2021/01/Modele-en-cascade-generique.png.webp"
+                    alt="méthode en cascade"
+                    style="width: 90%; max-width: 800px;"
+                >
+
+            </div>
+
+
+            <div class="methode reveal">
+
+                <h4>
+                    <span style="color: #E65100;">
+                        • Méthode V
+                    </span>
+                </h4>
+
+                <p>
+                    Chaque phase de développement est associée à une phase
+                    de test ou de validation.
+                </p>
+
+            </div>
+
+
+            <div class="image reveal">
+
+                <img
+                    class="image-animation"
+                    src="https://www.itss.paris/sites/default/files/inline-images/Article%20blog%20Cycle%20en%20V%20vs%20M%C3%A9thode%20agile_%20(1).png"
+                    alt="méthode V"
+                    style="width: 90%; max-width: 800px;"
+                >
+
+            </div>
+
+
+            <div class="methode reveal">
+
+                <div class="texte">
+
+                    <h4>
+                        <span style="color: #E65100;">
+                            • Méthode Y
+                        </span>
+                    </h4>
+
+
+                    <p>
+                        La méthode Y permet de gérer un projet en prenant en compte
+                        plusieurs possibilités d’évolution à partir d’une base commune.
+                        Elle offre ainsi plus de flexibilité que les méthodes classiques.
+                        Il constitue de deux branches principales :
+                        <br>
+
+                        • <b>la branche gauche :</b>
+                        qui est la fonctionnelle, elle vise à capturer les besoins fonctionnels.
+                        <br>
+
+                        • <b>la branche droite :</b>
+                        capture les besoins techniques qui recensent toutes les contraintes
+                        et les choix de conception du système. Elle définit les composants
+                        nécessaires à la construction de l’architecture technique.
+                        <br>
+
+                        • <b>La phase de réalisation :</b>
+                        est importante car elle permet de valider les choix techniques
+                        et fonctionnels du projet. Elle consiste à réaliser les composants
+                        du système et à les assembler pour obtenir un prototype fonctionnel.
+                    </p>
+
+                </div>
+
+
+                <div class="image">
+
+                    <img
+                        class="image-animation"
+                        src="methode en y.png"
+                        alt="méthode Y"
+                        style="width: 90%; max-width: 800px;"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="categorie">
+
+            <h3 class="reveal">
+                <span style="color: #8D4E2A;">
+                    2. Méthodologies modernes / adaptatives / agiles / imprévisibles:
+                </span>
+            </h3>
+
+
+            <div class="image reveal">
+
+                <img
+                    class="image-animation"
+                    src="https://blog-gestion-de-projet.com/wp-content/uploads/2022/09/Les-methodes-de-gestion-agiles.png.webp"
+                    alt="méthodes agiles"
+                    style="width: 90%; max-width: 800px;"
+                >
+
+            </div>
+
+
+            <div class="methode reveal">
+
+                <h4>
+                    <span style="color: #E65100;">
+                        • Agile
+                    </span>
+                </h4>
+
+                <p>
+                    Le projet est réalisé progressivement et peut être
+                    adapté en fonction des changements et des besoins.
+                </p>
+
+            </div>
+
+
+            <div class="methode reveal">
+
+                <h4>
+                    <span style="color: #E65100;">
+                        • Scrum
+                    </span>
+                </h4>
+
+                <p>
+                    Méthode Agile basée sur des cycles courts appelés
+                    « Sprints ».
+                </p>
+
+            </div>
+
+
+            <div class="methode reveal">
+
+                <h4>
+                    <span style="color: #E65100;">
+                        • Kanban
+                    </span>
+                </h4>
+
+                <p>
+                    Gestion visuelle des tâches à l'aide d'un tableau :
+                    À faire → En cours → Terminé.
+                </p>
+
+            </div>
+
+
+            <div class="methode reveal">
+
+                <h4>
+                    <span style="color: #E65100;">
+                        • Lean
+                    </span>
+                </h4>
+
+                <p>
+                    Méthode qui cherche à réduire les gaspillages
+                    et à améliorer l'efficacité du projet.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <h1 class="reveal">
+        <strong>
+            <u>
+                <span style="color:#8172D5">
+                    Définition d'un risque
+                </span>
+            </u>
+        </strong>
+    </h1>
+
+
+    <p class="reveal">
+
+        → est un événement incertain qui peut avoir un impact positif ou négatif
+        sur le projet notamment en terme de budget, délai, qualité et périmètre.
+        Mathématiquement, la probabilité d'un risque égale la possibilité
+        qu'un problème potentiel se produise au cours du projet.
+
+        <br><br>
+
+        • niveau de risque = la probabilité × l'impact
+
+        <br><br>
+
+        • un risque négatif = problème
+
+        <br><br>
+
+        • un risque positif = opportunité.
+
+    </p>
+
+
+    <div class="schema-risques">
+
+        <h1 class="reveal">
+            <strong>
+                <u>
+                    <span style="color:#8172D5">
+                        Types de risques
+                    </span>
+                </u>
+            </strong>
+        </h1>
+
+
+        <div class="ligne-risques">
+
+            <div class="type-risque reveal">
+
+                <h3>
+                    <span style="color: #8D4E2A;">
+                        Risques techniques
+                    </span>
+                </h3>
+
+                <p>
+                    Problèmes liés aux technologies, logiciels et infrastructures.
+                </p>
+
+            </div>
+
+
+            <div class="type-risque reveal">
+
+                <h3>
+                    <span style="color: #8D4E2A;">
+                        Risques financiers
+                    </span>
+                </h3>
+
+                <p>
+                    Dépassement de budget et augmentation imprévue des coûts.
+                </p>
+
+            </div>
+
+
+            <div class="type-risque reveal">
+
+                <h3>
+                    <span style="color: #8D4E2A;">
+                        Risques liés au délai
+                    </span>
+                </h3>
+
+                <p>
+                    Événements pouvant provoquer un retard dans la réalisation du projet.
+                </p>
+
+            </div>
+
+
+            <div class="type-risque reveal">
+
+                <h3>
+                    <span style="color: #8D4E2A;">
+                        Risques humains et organisationnels
+                    </span>
+                </h3>
+
+                <p>
+                    Difficultés liées aux membres de l'équipe,
+                    à la communication ou à l'organisation.
+                </p>
+
+            </div>
+
+
+            <div class="type-risque reveal">
+
+                <h3>
+                    <span style="color: #8D4E2A;">
+                        Risques de sécurité
+                    </span>
+                </h3>
+
+                <p>
+                    Menaces pouvant compromettre la confidentialité,
+                    l'intégrité et la disponibilité des données.
+                </p>
+
+            </div>
+
+
+            <div class="type-risque reveal">
+
+                <h3>
+                    <span style="color: #8D4E2A;">
+                        Risques juridiques et réglementaires
+                    </span>
+                </h3>
+
+                <p>
+                    Non-respect des lois, des contrats ou des obligations réglementaires.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+<section class="cours-ajout">
+    <h1 class="reveal">Compréhension du client et techniques de communication</h1>
+    <div class="carte-ajout reveal">
+        <h2>Le client et ses besoins</h2>
+        <p>La compréhension du client permet de mieux identifier ses besoins et de proposer un produit ou un service adapté(Art de vente).</p>
+    </div>
+
+    <h2 class="reveal">Les étapes de la relation avec le client</h2>
+    <div class="grille-ajout">
+        <div class="petite-carte reveal"><h3>1. Création d’un climat de confiance</h3><p>Créer une relation favorable pour s’adapter au client.</p></div>
+        <div class="petite-carte reveal"><h3>2. Persona client</h3><p>C’est un profil fictif qui représente un client type, créé à partir de ses besoins, ses objectifs, ses comportements et ses caractéristiques, afin de mieux comprendre ses attentes et adapter un produit ou un service à ses besoins.</p></div>
+        <div class="petite-carte reveal"><h3>3. Écoute active</h3><p>Écouter attentivement le client pour comprendre sa demande et ses attentes.</p></div>
+        <div class="petite-carte reveal"><h3>4.Décriter les comportements</h3><p>La prise de décision du client peut être influencée par plusieurs principes psychologiques, comme principe de rareté, réciprocité, preuve social</p></div>
+    </div>
+
+    <h2 class="reveal">Techniques de persuasion</h2>
+    <div class="carte-ajout reveal">
+        <p>La technique de persuasion consiste à identifier la motivation du client pour mieux orienter l’argumentaire à travers la méthode <strong>SONCAS</strong>.</p>
+        <div class="grille-ajout">
+            <div class="petite-carte reveal"><h3>S — Sécurité</h3><p>Rassurer le client.</p></div>
+            <div class="petite-carte reveal"><h3>O — Orgueil</h3><p>Valoriser l’image et l’importance du client.</p></div>
+            <div class="petite-carte reveal"><h3>N — Nouveauté</h3><p>Mettre en avant ce qui est nouveau.</p></div>
+            <div class="petite-carte reveal"><h3>C — Confort</h3><p>Montrer la simplicité et le confort d’utilisation.</p></div>
+            <div class="petite-carte reveal"><h3>A — Argent</h3><p>Présenter le prix et les avantages économiques.</p></div>
+            <div class="petite-carte reveal"><h3>S — Sympathie</h3><p>Créer une relation agréable et positive.</p></div>
+        </div>
+    </div>
+
+    <div class="grille-ajout">
+        <div class="petite-carte reveal">
+            <h3>Storytelling</h3>
+            <p>Utiliser une histoire pour présenter un produit ou un service et créer un lien avec le client.</p>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>La refurmulation positive / Marketing</h3>
+            <p>C’est une technique de communication qui consiste à reformuler les paroles ou les objections du client de manière positive afin de mieux comprendre ses besoins et de renforcer sa confiance..</p>
+        </div>
+    </div>
+
+    <div class="note-cours reveal">
+        <strong>Clé de succès d’un projet :</strong> la compréhension du client.
+    </div>
+
+    <h2 class="reveal">Marketing fondamentale</h2>
+    <div class="carte-ajout reveal">
+        <p>désigne l'ensemble de pratique et de stratégie visant à comprendre, anticiper et satisfaire les besoins des consommateurs (client final). Il ne se limite pas à la vente ou à la publicité, mais englobe l'ensemble des interactions entre une entreprise et son marché cible.</p>
+    </div>
+    <h2 class="reveal">Marketing digital</h2>
+    <div class="carte-ajout reveal">
+        <p>regroupent l’ensemble des techniques et des canaux numériques utilisés pour promouvoir une marque, un produit ou un service auprès des consommateurs.</p>
+    </div>
+</section>
+
+<section class="cours-ajout">
+    <h1 class="reveal">Scrum</h1>
+    <div class="carte-ajout reveal">
+        <p><strong>SCRUM :</strong> c’est une méthodologie agile consacrée à la gestion de projet. Son objectif principal est d’améliorer la productivité des équipes tout en permettant une emptimation du produit grâce à des feedbacks réguliers.</p>
+    </div>
+
+    <h2 class="reveal">Les rôles (Qui ?)</h2>
+    <div class="grille-ajout">
+        <div class="petite-carte reveal">
+            <h3>1. Chef de projet = Scrum Master</h3>
+            <p>Son rôle principal est la gestion du projet, facilite le travail.</p>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>2. Product Owner</h3>
+            <p>Il répartit les tâches, priorise les tâches et la redaction de cahier de charge</p>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>3. Équipe de développement / Scrum Team</h3>
+            <p>Son rôle est la réalisation des tâches.</p>
+        </div>
+    </div>
+    <div class="note-cours reveal">
+        <strong>Parties prenantes :</strong> on utilise Scrum lorsque on veut travailler ou gérer des projets complexes et changeants.
+    </div>
+
+    <h2 class="reveal">Les principes de Scrum</h2>
+    <div class="grille-ajout">
+        <div class="petite-carte reveal"><h3>La flexibilité</h3><p>S’adapter aux changements.</p></div>
+        <div class="petite-carte reveal"><h3>L’adaptabilité</h3><p>Ajuster le travail selon les besoins et les retours.</p></div>
+        <div class="petite-carte reveal"><h3>La livraison continue</h3><p>Faire évoluer le produit et fournir régulièrement des résultats.</p></div>
+    </div>
+
+    <h2 class="reveal">Les événements Scrum</h2>
+    <div class="carte-ajout reveal">
+        <h3>1. Daily Scrum — Mêlée quotidienne</h3>
+        <p>Réunion quotidienne de 15 à 20 minutes, organisée autour de trois questions :</p>
+        <ul>
+            <li>Qu’est-ce qu’on a fait ?</li>
+            <li>Qu’est-ce qu’on va faire ?</li>
+            <li>Quels problèmes avons-nous rencontrés ?</li>
+        </ul>
+    </div>
+    <div class="carte-ajout reveal">
+        <h3>2. Sprint Planning</h3>
+        <p>C’est une réunion organisée au début de chaque sprint où l’équipe citer:</p>
+        <ol>
+            <li>Objectifs du Sprint Planning(pourquoi) </li>
+            <li>Choisir les éléments prioritaires du Product Backlog.</li>
+            <li>Comment décomposer ces éléments en tâches et organiser le travail.</li>
+        </ol>
+    </div>
+    <div class="carte-ajout reveal">
+        <h3>3. Sprint Review</h3>
+        <p>C’est une démonstration de ce qui a été créé où on test les bénifices de la fonctionnalité avec le Product Owner.</p>
+    </div>
+    <div class="carte-ajout reveal">
+        <h3>4. Sprint Retrospective</h3>
+        <p>C’est une réunion régulière qui se tient à la fin du sprint, au cours de laquelle l’équipe Scrum revient sur le déroulement de travail.</p>
+    </div>
+
+    <h2 class="reveal">Les artefacts (les résultats)</h2>
+    <div class="grille-ajout">
+        <div class="petite-carte reveal">
+            <h3>Product Backlog</h3>
+            <p>Le cahier des charges / la liste des besoins du produit.</p>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>Sprint Backlog</h3>
+            <p>c'est une période de travail courte et limitée pendant laquelle l'équipe Scrum réalise un objectif et produit un incrément.</p>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>Increment</h3>
+            <p>c'est un livrable tangible concret vérifiable délivré par product owner dans la finalité de chaque sprint.</p>
+        </div>
+    </div>
+
+    <h2 class="reveal">Le déroulement d’un Sprint:</h2>
+    <div class="grille-ajout">
+        <div class="etape-scrum reveal">Sprint Planning</div>
+        <div class="etape-scrum reveal">Daily Scrum</div>
+        <div class="etape-scrum reveal">Sprint Review</div>
+        <div class="etape-scrum reveal">Sprint Retrospective</div>
+    </div>
+
+    <h2 class="reveal">Les principes du Manifeste Agile:</h2>
+        <div class="carte-ajout reveal">
+        <p><strong>1. Les individus et leurs interactions plus que les processes et les outils</strong></p>
+    </div>
+    <div class="carte-ajout reveal">
+        <p><strong>2. Des logiciels opérationnels plus qu’une documentation exaustif</strong> </p>
+    </div>
+    <div class="carte-ajout reveal">
+        <p><strong>3. La collaboration avec les clients plus que la négociation contractuelle</strong></p>
+    </div>
+    <div class="carte-ajout reveal">
+        <p><strong>4. L’adaptation aux changements plus que le suivi d’un plan.</strong></p>
+    </div>
+
+    <h2 class="reveal">Kanban</h2>
+    <div class="carte-ajout reveal">
+        <p><strong>Définition :</strong> Kanban est une méthode de gestion de tâches visuelle, utilisée pour contrôler le flux de travail et optimiser l’efficacité du travail en suivons les taches dés le à la fin.</p>
+    </div>
+    <div class="grille-ajout">
+        <div class="etape-scrum reveal">À faire (To Do)</div>
+        <div class="etape-scrum reveal">En cours (Doing)</div>
+        <div class="etape-scrum reveal">Terminé (Done)</div>
+    </div>
+
+    <h2 class="reveal">La programmation Extrême (XP)</h2>
+    <div class="carte-ajout reveal">
+        <p>C'est une méthode agile de développement logiciel qui vise à améliorer la qualité du code et l'adaptation aux besoins changeants du client.
+           Parmi ses valeurs, on trouve : La communication, la simplicité, feedback, l'audace et le respect.</p>
+    </div>
+    <div class="grille-ajout">
+        <div class="petite-carte reveal"><h3>Communication</h3></div>
+        <div class="petite-carte reveal"><h3>Simplicité</h3></div>
+        <div class="petite-carte reveal"><h3>Feedback</h3></div>
+        <div class="petite-carte reveal"><h3>Audace</h3></div>
+        <div class="petite-carte reveal"><h3>Respect</h3></div>
+    </div>
+    <div class="note-cours reveal">
+        <strong>Pratiques XP :</strong> pour mettre cette méthode en pratique, on peut utiliser la programmation en binôme et réaliser des tests pendant le développement.
+    </div>
+
+    <h2 class="reveal">Le processus de méthodologie Scrum se divise en 3 grandes phases inspirées de la métaphore du rugby :</h2>
+    <div class="grille-ajout">
+        <div class="petite-carte reveal">
+            <h3>Pre-game</h3>
+           <p>Consiste à poser les bases du projet avant de lancer la production :
+                - Planification
+                - Création du Product Backlog
+                - Estimation et priorisation </p>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>Game</h3>
+            <p>C'est le cœur de Scrum rythmé par des cycles de travail appelés Sprint où chaque sprint inclus les événements suivants :</p>
+            <ul>
+                <li>Sprint Planning</li>
+                <li>Daily Scrum</li>
+                <li>Sprint Review</li>
+                <li>Sprint Retrospective</li>
+            </ul>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>Post-game</h3>
+            <p>C’est la phase de clôture : livraison finale du projet.</p>
+            <ul>
+                <li>des derniers tests d'acceptation globale et la conception du dernier plan.</li>
+                <li>Déploiement de la version finale.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="reveal">User Story</h2>
+    <div class="carte-ajout reveal">
+        <p><strong>User Story (Récit Utilisateur) </strong>est une description générale d’une fonctionnalité selon le point de vue de son utilisateur final. C’est la première pièce rédigée du Product Owner, écrite afin de construire le Product Backlog.</p>
+    </div>
+    <div class="note-cours reveal">
+        <strong>L’expression :</strong> En tant que [Qui ?], je veux [Quoi ?], afin de [Objectif / But].
+    </div>
+
+    <h2 class="reveal">Exemple : gestion des réclamations</h2>
+    <div class="grille-ajout">
+        <div class="petite-carte reveal">
+            <h3>1. User Story</h3>
+            <p>Je veux une application ou un site pour gérer les réclamations des étudiants.</p>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>2. Le besoin</h3>
+            <p>L’équipe de réalisation a compris, lors de la réunion, que le client cherche à déposer, consulter, créer et traiter les réclamations.</p>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>3. L’objectif</h3>
+            <p>Créer une application de gestion de réclamations.</p>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>4. Les fonctionnalités</h3>
+            <ol>
+                <li>Authentification</li>
+                <li>Déposer une réclamation</li>
+                <li>Consulter une réclamation</li>
+                <li>Suivre le statut</li>
+            </ol>
+        </div>
+        <div class="petite-carte reveal">
+            <h3>5. Les tâches</h3>
+            <ul>
+                <li>Conception du formulaire</li>
+                <li>Création de la table de réclamation</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<script>
+const modeBtn = document.getElementById("modeBtn");
+const modeSauvegarde = localStorage.getItem("mode");
+
+if (modeSauvegarde === "sombre") {
+    document.body.classList.add("mode-sombre");
+    modeBtn.innerHTML = "☀️ Mode clair";
+}
+
+modeBtn.addEventListener("click", function () {
+    document.body.classList.toggle("mode-sombre");
+
+    if (document.body.classList.contains("mode-sombre")) {
+        modeBtn.innerHTML = "☀️ Mode clair";
+        localStorage.setItem("mode", "sombre");
+    } else {
+        modeBtn.innerHTML = "🌙 Mode sombre";
+        localStorage.setItem("mode", "clair");
+    }
+});
+
+const topBtn = document.getElementById("topBtn");
+
+window.addEventListener("scroll", function () {
+    if (window.scrollY > 300) {
+        topBtn.style.display = "block";
+    } else {
+        topBtn.style.display = "none";
+    }
+});
+
+topBtn.addEventListener("click", function () {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
+const elements = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        }
+    });
+}, {
+    threshold: 0.15
+});
+
+elements.forEach(function (element) {
+    observer.observe(element);
+});
+
+const progressBar = document.getElementById("progressBar");
+
+window.addEventListener("scroll", function () {
+    const scrollTop = window.scrollY;
+    const documentHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+    const progress = (scrollTop / documentHeight) * 100;
+
+    progressBar.style.width = progress + "%";
+});
+
+const images = document.querySelectorAll("img");
+
+images.forEach(function (image) {
+    image.addEventListener("click", function () {
+        const overlay = document.createElement("div");
+
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.backgroundColor = "rgba(0, 0, 0, 0.85)";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.zIndex = "3000";
+        overlay.style.cursor = "zoom-out";
+
+        const imageZoom = document.createElement("img");
+
+        imageZoom.src = image.src;
+        imageZoom.style.maxWidth = "90%";
+        imageZoom.style.maxHeight = "90%";
+        imageZoom.style.width = "auto";
+        imageZoom.style.height = "auto";
+        imageZoom.style.borderRadius = "15px";
+        imageZoom.style.boxShadow = "0 15px 50px rgba(0,0,0,0.5)";
+        imageZoom.style.objectFit = "contain";
+
+        overlay.appendChild(imageZoom);
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener("click", function () {
+            overlay.remove();
+        });
+    });
+});
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        const overlay = document.querySelector(
+            'div[style*="rgba(0, 0, 0, 0.85)"]'
+        );
+
+        if (overlay) {
+            overlay.remove();
+        }
+    }
+});
+</script>
+    
+           
+</body>
+
+</html>
